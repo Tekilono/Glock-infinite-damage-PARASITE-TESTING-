@@ -1,0 +1,30 @@
+local tool = script.Parent
+local DAMAGE_AMOUNT = 5e+32 -- 500 nonillion
+local Players = game:GetService("Players")
+
+tool.Activated:Connect(function()
+	local character = tool.Parent
+	local player = Players:GetPlayerFromCharacter(character)
+	if not player then return end
+
+	local mouse = player:GetMouse() -- This part is client-side only; not usable here
+	-- Instead, we'll use a short raycast forward from the character's head
+
+	local head = character:FindFirstChild("Head")
+	if not head then return end
+
+	local origin = head.Position
+	local direction = head.CFrame.LookVector * 100 -- distance of ray
+
+	local rayParams = RaycastParams.new()
+	rayParams.FilterDescendantsInstances = {character}
+	rayParams.FilterType = Enum.RaycastFilterType.Blacklist
+ local result = workspace:Raycast(origin, direction, rayParams)
+
+	if result and result.Instance then
+		local targetHumanoid = result.Instance:FindFirstAncestorWhichIsA("Model")
+		if targetHumanoid and targetHumanoid:FindFirstChild("Humanoid") then
+			targetHumanoid.Humanoid:TakeDamage(DAMAGE_AMOUNT)
+		end
+	end
+end)
