@@ -10,4 +10,4 @@ Placement:
 Notes:
 - This tool is server-sided and does not use ServerScriptService, Workspace, or ReplicatedStorage.
 - Intended for private use or controlled environments.
-- Do not use in public games to avoid violating Roblox rules.
+- We disclaim responsibility if you have been banned by the game or the moderators of this game
